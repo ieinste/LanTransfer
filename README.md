@@ -1,5 +1,7 @@
 # 轻传 LanTransfer
 
+[简体中文](README.md) | [English](README.en.md)
+
 轻量的 Windows 局域网文件互传工具。支持同一子网和网线直连，两端都运行 `LanTransfer.exe`。不依赖互联网、账户、服务器或浏览器，不会调用外部中继。
 
 ## 运行

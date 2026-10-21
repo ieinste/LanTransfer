@@ -17,7 +17,9 @@ $sources = @(Get-ChildItem -LiteralPath (Join-Path $root 'src') -Filter '*.cs' |
 & $compiler /nologo /noconfig /nostdlib+ /optimize+ /platform:anycpu /target:winexe "/out:$outDir\LanTransfer.exe" $references $sources
 if ($LASTEXITCODE -ne 0) { throw 'Compilation failed.' }
 Copy-Item -LiteralPath (Join-Path $root 'src\LanTransfer.exe.config') -Destination (Join-Path $outDir 'LanTransfer.exe.config')
-Copy-Item -LiteralPath (Join-Path $root 'README.md') -Destination $outDir
+foreach ($readme in @('README.md', 'README.zh-CN.md', 'README.en.md')) {
+    Copy-Item -LiteralPath (Join-Path $root $readme) -Destination $outDir
+}
 $docDir = Join-Path $outDir 'docs'
 New-Item -ItemType Directory -Force -Path $docDir | Out-Null
 Copy-Item -LiteralPath (Join-Path $root 'docs\PLATFORM-SUPPORT.md') -Destination $docDir
