@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+.dotnet/
+release/
+test-output/
+tools/net40/
+TEST-RESULTS.txt
+.vs/
+*.user
+*.suo
+.lantransfer-cache/
