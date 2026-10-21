@@ -23,6 +23,10 @@
 
 ## 实现与边界
 
+v0.2.1 风格统一：收发界面共用紫色主色、圆角按钮与卡片，文本框、下拉框和端口框使用等高输入外壳；进度条沿用主色，文件与文件夹改用统一的线稿图标。
+
+v0.2.0 界面优化：发送与接收使用双栏卡片，队列可查看完整文件路径；本机 IPv4 支持下拉选择，并可复制地址与实际接收端口。收发状态独立显示，活动记录集中呈现。修复搜索结果未正确带入端口、设备搜索与发送按钮状态冲突，以及停止接收后旧进度覆盖状态的问题。小窗口仍保持双栏布局。
+
 v0.1.1 修复：接收端口冲突时自动换用可用端口，界面同步实际端口，设备搜索支持多个候选 UDP 端口。新旧版本的文件传输协议兼容，但建议双方都使用新版本，以发现更换搜索端口后的设备。
 
 - 原生 WinForms 界面，AnyCPU 单一可执行文件，不包含 Electron/WebView 或第三方运行库。
@@ -43,17 +47,19 @@ v0.1.1 修复：接收端口冲突时自动换用可用端口，界面同步实�
 ```powershell
 # 构建程序
 powershell -ExecutionPolicy Bypass -File .\build.ps1
-# 构建并运行测试
+# 构建并运行传输测试及界面检查
 powershell -ExecutionPolicy Bypass -File .\build.ps1 -Test
+# 构建并单独运行界面渲染检查
+powershell -ExecutionPolicy Bypass -File .\build.ps1 -UiTest
 # 可选：增加真实超过 4 GiB 文件传输测试，需要约 9 GiB 空闲空间
 powershell -ExecutionPolicy Bypass -File .\build.ps1 -LargeTest
 # 将新版本生成到独立目录，避免覆盖正在运行的程序
-powershell -ExecutionPolicy Bypass -File .\build.ps1 -OutputDirectory release\v0.1.1
+powershell -ExecutionPolicy Bypass -File .\build.ps1 -OutputDirectory release\v0.2.1
 ```
 
 如果构建机没有 4.0 引用程序集，可在 PowerShell 5+ 运行 `powershell -ExecutionPolicy Bypass -File .\prepare-references.ps1`，从 NuGet 下载微软 `Microsoft.NETFramework.ReferenceAssemblies.net40` 1.0.3。这只用于构建，不会添加应用运行依赖。
 
-自动化测试覆盖批量/中文路径/空目录/空文件、重复跳过、冲突保护、错误接收码、连接中断续传、损坏前缀重传、路径逃逸及协议长度限制。实际吞吐和跨机器防火墙/网线环境需要在目标设备验证。
+自动化测试覆盖批量/中文路径/空目录/空文件、重复跳过、冲突保护、错误接收码、连接中断续传、损坏前缀重传、路径逃逸及协议长度限制。`-Test` 也会执行界面检查；`-UiTest` 可单独运行界面渲染检查。实际吞吐和跨机器防火墙/网线环境需要在目标设备验证。
 
 ## 源码结构
 
@@ -65,6 +71,10 @@ prepare-references.ps1  下载构建用的微软引用程序集
 ```
 
 本仓库仅包含源码和文档。编译产物、测试数据、缓存和第三方运行库安装包不提交到仓库。首次构建若缺少引用程序集，需要联网运行 `prepare-references.ps1`；引用程序集准备好后，可离线构建。
+
+## 跨平台支持
+
+当前只有 Windows 客户端已实现。macOS、Linux、Android、iOS 可以通过新增跨平台客户端逐步支持，但现有 WinForms 程序不能直接运行到这些平台。计划保留 Win7 兼容版，未来评估现代 .NET + Avalonia 客户端并复用传输协议；目前尚未提供其他平台的客户端或验证结果。详见[跨平台支持评估](docs/PLATFORM-SUPPORT.md)。
 
 ## 官方运行库
 
