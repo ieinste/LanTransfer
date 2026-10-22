@@ -6,7 +6,7 @@ A lightweight file transfer tool for Windows computers on the same local network
 
 The application interface is currently in Simplified Chinese. This document provides English instructions, with the Chinese button labels included where useful.
 
-Download the Windows package from the [latest release](https://github.com/ieinste/qingchuan-lan-transfer/releases/latest).
+Download the Windows package from the [latest release](https://github.com/ieinste/LanTransfer/releases/latest).
 
 ## Requirements and running the app
 
